@@ -3,7 +3,13 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { LogOut, Menu, X } from 'lucide-react';
+import { LogOut, Menu, X, ChevronDown } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
@@ -64,13 +70,29 @@ const Navbar = () => {
               <Button variant="ghost" size="sm" asChild className="hidden sm:inline-flex">
                 <Link to="/login">Sign In</Link>
               </Button>
-              <Button 
-                className="bg-gradient-to-r from-fashion-purple to-fashion-darkPurple hover:opacity-90 transition-opacity"
-                asChild
-                size="sm"
-              >
-                <Link to="/signup">Get Started</Link>
-              </Button>
+              
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    className="bg-gradient-to-r from-fashion-purple to-fashion-darkPurple hover:opacity-90 transition-opacity flex items-center gap-1"
+                    size="sm"
+                  >
+                    Get Started <ChevronDown size={16} />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem asChild>
+                    <Link to="/signup" className="w-full cursor-pointer">
+                      Sign Up
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/design" className="w-full cursor-pointer">
+                      Try Design Studio
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </>
           )}
           
@@ -113,13 +135,22 @@ const Navbar = () => {
                 About
               </Link>
               {!user && (
-                <Link 
-                  to="/login" 
-                  className="text-base font-medium hover:text-fashion-purple transition-colors px-2 py-1 sm:hidden"
-                  onClick={toggleMobileMenu}
-                >
-                  Sign In
-                </Link>
+                <>
+                  <Link 
+                    to="/login" 
+                    className="text-base font-medium hover:text-fashion-purple transition-colors px-2 py-1 sm:hidden"
+                    onClick={toggleMobileMenu}
+                  >
+                    Sign In
+                  </Link>
+                  <Link 
+                    to="/signup" 
+                    className="text-base font-medium hover:text-fashion-purple transition-colors px-2 py-1"
+                    onClick={toggleMobileMenu}
+                  >
+                    Sign Up
+                  </Link>
+                </>
               )}
             </nav>
           </div>
