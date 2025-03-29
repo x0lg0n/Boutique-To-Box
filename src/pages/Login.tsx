@@ -13,6 +13,7 @@ import { toast } from "@/hooks/use-toast";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useAuth } from '@/contexts/AuthContext';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),
@@ -22,6 +23,7 @@ const loginSchema = z.object({
 const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const isMobile = useIsMobile();
   
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -51,15 +53,15 @@ const Login = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-1 flex items-center justify-center px-4 py-24">
-        <Card className="w-full max-w-md">
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl">Welcome Back</CardTitle>
+      <main className="flex-1 flex items-center justify-center px-4 py-12 md:py-24">
+        <Card className="w-full max-w-md mx-4 md:mx-0">
+          <CardHeader className="text-center pb-2 md:pb-6">
+            <CardTitle className="text-xl md:text-2xl">Welcome Back</CardTitle>
             <CardDescription>Sign in to your ThreadTailor account</CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 md:space-y-4">
                 <FormField
                   control={form.control}
                   name="email"
@@ -73,6 +75,8 @@ const Login = () => {
                             placeholder="email@example.com" 
                             className="pl-10" 
                             {...field} 
+                            type="email"
+                            autoComplete="email"
                           />
                         </div>
                       </FormControl>
@@ -94,6 +98,7 @@ const Login = () => {
                             placeholder="••••••••" 
                             className="pl-10" 
                             {...field} 
+                            autoComplete="current-password"
                           />
                         </div>
                       </FormControl>
@@ -109,14 +114,15 @@ const Login = () => {
                 <Button 
                   type="submit" 
                   className="w-full bg-gradient-to-r from-fashion-purple to-fashion-darkPurple hover:opacity-90"
+                  size={isMobile ? "default" : "lg"}
                 >
                   Sign In
                 </Button>
               </form>
             </Form>
           </CardContent>
-          <CardFooter className="flex justify-center">
-            <p className="text-sm text-muted-foreground">
+          <CardFooter className="flex justify-center pt-2 md:pt-4">
+            <p className="text-xs md:text-sm text-muted-foreground">
               Don't have an account?{" "}
               <Link to="/signup" className="text-fashion-purple hover:underline">
                 Sign up
