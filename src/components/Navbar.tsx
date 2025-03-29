@@ -1,12 +1,17 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { LogOut, User } from 'lucide-react';
+import { LogOut, Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const { user, logout } = useAuth();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b">
@@ -24,6 +29,7 @@ const Navbar = () => {
           <span className="text-xl font-bold">ThreadTailor</span>
         </Link>
         
+        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
           <Link to="/" className="text-sm font-medium hover:text-fashion-purple transition-colors">
             Home
@@ -36,6 +42,7 @@ const Navbar = () => {
           </Link>
         </nav>
         
+        {/* Auth Actions */}
         <div className="flex items-center gap-4">
           {user ? (
             <div className="flex items-center gap-4">
@@ -54,19 +61,70 @@ const Navbar = () => {
             </div>
           ) : (
             <>
-              <Button variant="ghost" size="sm" asChild>
+              <Button variant="ghost" size="sm" asChild className="hidden sm:inline-flex">
                 <Link to="/login">Sign In</Link>
               </Button>
               <Button 
                 className="bg-gradient-to-r from-fashion-purple to-fashion-darkPurple hover:opacity-90 transition-opacity"
                 asChild
+                size="sm"
               >
                 <Link to="/signup">Get Started</Link>
               </Button>
             </>
           )}
+          
+          {/* Mobile Menu Button */}
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="md:hidden" 
+            onClick={toggleMobileMenu}
+          >
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </Button>
         </div>
       </div>
+      
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-white border-b shadow-sm">
+          <div className="container py-4 space-y-4">
+            <nav className="flex flex-col space-y-3">
+              <Link 
+                to="/" 
+                className="text-base font-medium hover:text-fashion-purple transition-colors px-2 py-1"
+                onClick={toggleMobileMenu}
+              >
+                Home
+              </Link>
+              <Link 
+                to="/design" 
+                className="text-base font-medium hover:text-fashion-purple transition-colors px-2 py-1"
+                onClick={toggleMobileMenu}
+              >
+                Design Studio
+              </Link>
+              <Link 
+                to="/about" 
+                className="text-base font-medium hover:text-fashion-purple transition-colors px-2 py-1"
+                onClick={toggleMobileMenu}
+              >
+                About
+              </Link>
+              {!user && (
+                <Link 
+                  to="/login" 
+                  className="text-base font-medium hover:text-fashion-purple transition-colors px-2 py-1 sm:hidden"
+                  onClick={toggleMobileMenu}
+                >
+                  Sign In
+                </Link>
+              )}
+            </nav>
+          </div>
+        </div>
+      )}
     </header>
   );
 };

@@ -53,7 +53,7 @@ const Login = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-1 flex items-center justify-center px-4 py-12 md:py-24">
+      <main className="flex-1 flex items-center justify-center px-4 py-12 md:py-24 mt-16 md:mt-0">
         <Card className="w-full max-w-md mx-4 md:mx-0">
           <CardHeader className="text-center pb-2 md:pb-6">
             <CardTitle className="text-xl md:text-2xl">Welcome Back</CardTitle>
