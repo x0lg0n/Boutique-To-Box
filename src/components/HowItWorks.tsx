@@ -1,6 +1,4 @@
 
-import React from 'react';
-
 const steps = [
   {
     number: "1",
@@ -33,7 +31,7 @@ const HowItWorks = () => {
     <section className="py-16 md:py-24 bg-secondary/50">
       <div className="container px-4 md:px-6">
         <div className="text-center mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">How ThreadTailor Works</h2>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">How Boutique to Box Works</h2>
           <p className="text-muted-foreground md:text-lg md:w-3/4 mx-auto">
             From idea to custom clothing in just four simple steps
           </p>

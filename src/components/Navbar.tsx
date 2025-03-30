@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from 'react-router-dom';
@@ -38,7 +37,7 @@ const Navbar = () => {
               <path d="M18 10a8 8 0 0 0-8-8" />
             </svg>
           </div>
-          <span className="text-xl font-bold">ThreadTailor</span>
+          <span className="text-xl font-bold">Boutique to Box</span>
         </Link>
         
         {/* Desktop Navigation */}

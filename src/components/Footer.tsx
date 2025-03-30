@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -18,7 +17,7 @@ const Footer = () => {
                   <path d="M18 10a8 8 0 0 0-8-8" />
                 </svg>
               </div>
-              <span className="text-xl font-bold">ThreadTailor</span>
+              <span className="text-xl font-bold">Boutique to Box</span>
             </div>
             <p className="text-sm text-muted-foreground">
               AI-powered fashion designs, 
@@ -102,7 +101,7 @@ const Footer = () => {
         
         <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} ThreadTailor. All rights reserved.
+            © {new Date().getFullYear()} Boutique to Box. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             <a href="#" className="text-muted-foreground hover:text-fashion-purple">
