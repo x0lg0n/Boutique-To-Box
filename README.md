@@ -8,9 +8,7 @@
 [![RunwayML](https://img.shields.io/badge/Integrated%20with-RunwayML-00C2FF)](https://runway.ml)
 
 ## 🚀 Live Demo
-[Live Prototype](https://boutique-to-box-ace-hack-4-0.vercel.app/) | [Pitch Deck](https://docs.google.com/presentation/XYZ)
-
-![Demo Preview](https://via.placeholder.com/1280x720.png?text=AI+Design+%e2%86%92+3D+Preview+%e2%86%92+Global+Manufacturing+Workflow)
+[Live Prototype](https://boutique-to-box-ace-hack-4-0.vercel.app/) 
 
 ## 🌟 Why FashionAI?
 **Industry 4.0 Breakthrough**:
