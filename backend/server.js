@@ -2,7 +2,7 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import { Client, Databases, Storage, ID, Query } from 'node-appwrite';
+import { Client, Databases, Storage, ID, Query } from 'appwrite';
 
 import styleRoutes from './routes/style.js';
 import measurementsRoutes from './routes/measurements.js';
