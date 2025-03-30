@@ -1,7 +1,7 @@
 # 👗 Boutique to Box: Next-Gen Intelligent Apparel Design Platform
 **AI-Powered End-to-End Fashion Ecosystem with Real-Time 3D Customization & Global Scalability**
 
-![Banner](https://via.placeholder.com/1920x600.png?text=FashionAI+-+From+Sketch+to+Global+Manufacturing+in+Minutes)
+![Banner](https://github.com/x0lg0n/Boutique-To-Box-AceHack-4.0/blob/main/Banner.png)
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Appwrite](https://img.shields.io/badge/Powered%20by-Appwrite-EC1C24)](https://appwrite.io)
