@@ -3,7 +3,10 @@ import React from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import DashboardSidebar from '@/components/DashboardSidebar';
+import { PanelLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 
 const DashboardLayout = () => {
   const { user, isLoading } = useAuth();
@@ -25,9 +28,32 @@ const DashboardLayout = () => {
   return (
     <SidebarProvider defaultOpen={true}>
       <div className="flex min-h-screen w-full">
-        <DashboardSidebar />
+        {/* Desktop Sidebar */}
+        <div className="hidden md:block">
+          <DashboardSidebar />
+        </div>
+        
+        {/* Mobile Sidebar with Drawer */}
+        <div className="md:hidden">
+          <Drawer>
+            <DrawerTrigger asChild>
+              <Button 
+                variant="outline" 
+                size="icon"
+                className="fixed top-4 left-4 z-40"
+              >
+                <PanelLeft className="h-4 w-4" />
+                <span className="sr-only">Toggle Menu</span>
+              </Button>
+            </DrawerTrigger>
+            <DrawerContent className="h-[80%] p-0">
+              <DashboardSidebar />
+            </DrawerContent>
+          </Drawer>
+        </div>
+
         <SidebarInset className="bg-gray-50">
-          <div className="p-6">
+          <div className="p-6 md:p-6 pt-16 md:pt-6">
             <Outlet />
           </div>
         </SidebarInset>
