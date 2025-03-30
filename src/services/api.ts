@@ -12,12 +12,23 @@ const api = axios.create({
 });
 
 // Style analysis service
-export const analyzeStyle = async (userInput: string) => {
+export const analyzeStyle = async (userInput: string, userId?: string) => {
   try {
-    const response = await api.post('/style/analyze', { userInput });
+    const response = await api.post('/style/analyze', { userInput, userId });
     return response.data;
   } catch (error) {
     console.error('Style analysis error:', error);
+    throw error;
+  }
+};
+
+// Get saved style preferences
+export const getStylePreferences = async (userId: string) => {
+  try {
+    const response = await api.get(`/style/preferences/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Style preferences fetch error:', error);
     throw error;
   }
 };
@@ -74,6 +85,7 @@ export const adjustDesignFit = async (params: {
 
 export default {
   analyzeStyle,
+  getStylePreferences,
   analyzeBodyMeasurements,
   generateDesign,
   adjustDesignFit

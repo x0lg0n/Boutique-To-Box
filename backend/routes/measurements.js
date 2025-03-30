@@ -1,12 +1,12 @@
 
 import express from 'express';
-import { appwriteDatabases, appwriteStorage, rekognition } from '../server.js';
-import { DetectProtectiveEquipmentCommand } from '@aws-sdk/client-rekognition';
+import { appwriteDatabases, appwriteStorage } from '../server.js';
 import { ID } from 'node-appwrite';
+import sharp from 'sharp';
 
 const router = express.Router();
 
-// Process body measurements from image
+// Process body measurements from image using free alternatives
 router.post('/analyze', async (req, res) => {
   try {
     // Get image from frontend (base64)
@@ -22,7 +22,7 @@ router.post('/analyze', async (req, res) => {
     const base64Data = imageBase64.replace(/^data:image\/\w+;base64,/, '');
     const imageBuffer = Buffer.from(base64Data, 'base64');
 
-    // For demo/hackathon purposes, we can use mock data if AWS is not set up
+    // For demo/hackathon purposes, we can use mock data
     let measurements;
     
     if (process.env.USE_MOCK_DATA === 'true') {
@@ -38,16 +38,15 @@ router.post('/analyze', async (req, res) => {
         );
         console.log('Uploaded body scan image:', file.$id);
 
-        // Analyze with AWS Rekognition
-        const command = new DetectProtectiveEquipmentCommand({
-          Image: { Bytes: imageBuffer }
-        });
+        // Process image with Sharp (free image processing library)
+        const imageMetadata = await sharp(imageBuffer).metadata();
+        const imageInfo = await analyzeBodyImage(imageBuffer);
         
-        const data = await rekognition.send(command);
-        measurements = processBodyData(data);
-        console.log('Processed measurements from AWS Rekognition');
-      } catch (awsError) {
-        console.error('AWS processing failed, falling back to mock data:', awsError);
+        // Calculate approximate measurements based on pixel ratios and metadata
+        measurements = calculateApproximateMeasurements(imageInfo, imageMetadata);
+        console.log('Processed measurements from image analysis');
+      } catch (error) {
+        console.error('Image processing failed, falling back to mock data:', error);
         measurements = getMockMeasurements();
       }
     }
@@ -81,11 +80,56 @@ router.post('/analyze', async (req, res) => {
   }
 });
 
-// Helper function to process AWS Rekognition data
-function processBodyData(data) {
-  // In reality, this would extract precise body measurements 
-  // from Rekognition's response. For now, we'll return mock data.
-  return getMockMeasurements();
+// Helper function to analyze body image
+async function analyzeBodyImage(imageBuffer) {
+  try {
+    // Using Sharp for basic image analysis
+    // This is a simplified placeholder - in a real app, you'd use 
+    // more advanced computer vision libraries like opencv.js or tfjs
+    const metadata = await sharp(imageBuffer).metadata();
+    
+    // Perform basic contour detection
+    const processedImage = await sharp(imageBuffer)
+      .grayscale()
+      .normalize()
+      .threshold(128)
+      .toBuffer();
+      
+    // For a real implementation, you'd extract key body points
+    // Here we're just returning basic image dimensions
+    return {
+      width: metadata.width,
+      height: metadata.height,
+      aspectRatio: metadata.width / metadata.height
+    };
+  } catch (error) {
+    console.error('Image analysis error:', error);
+    throw error;
+  }
+}
+
+// Helper function to calculate approximate measurements
+function calculateApproximateMeasurements(imageInfo, metadata) {
+  // In a real implementation, this would use computer vision to detect body parts
+  // and calculate proper measurements
+  
+  // For this demo, we're using aspect ratios to estimate measurements
+  const heightInCm = 175; // Average height
+  const pixelToCm = heightInCm / imageInfo.height;
+  
+  // Estimate measurements based on average human proportions
+  const shoulderWidth = Math.round(imageInfo.width * 0.25 * pixelToCm);
+  const chestSize = Math.round(imageInfo.width * 0.3 * pixelToCm);
+  const waistSize = Math.round(imageInfo.width * 0.25 * pixelToCm);
+  const hipSize = Math.round(imageInfo.width * 0.35 * pixelToCm);
+  
+  return {
+    height: heightInCm,
+    shoulderWidth,
+    chestSize,
+    waistSize,
+    hipSize
+  };
 }
 
 // Helper function to get mock measurements

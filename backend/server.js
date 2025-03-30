@@ -3,8 +3,6 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import { Client, Databases, Storage, ID, Query } from 'node-appwrite';
-import { RekognitionClient } from '@aws-sdk/client-rekognition';
-import { DetectProtectiveEquipmentCommand } from '@aws-sdk/client-rekognition';
 
 import styleRoutes from './routes/style.js';
 import measurementsRoutes from './routes/measurements.js';
@@ -23,15 +21,6 @@ export const appwriteClient = new Client()
 export const appwriteDatabases = new Databases(appwriteClient);
 export const appwriteStorage = new Storage(appwriteClient);
 
-// Initialize AWS Rekognition
-export const rekognition = new RekognitionClient({
-  region: process.env.AWS_REGION,
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY,
-    secretAccessKey: process.env.AWS_SECRET_KEY
-  }
-});
-
 // Routes
 app.use('/api/style', styleRoutes);
 app.use('/api/measurements', measurementsRoutes);
@@ -49,5 +38,5 @@ app.listen(PORT, () => {
   
   // Log initialization
   console.log(`Appwrite endpoint: ${process.env.APPWRITE_ENDPOINT}`);
-  console.log(`AWS region: ${process.env.AWS_REGION}`);
+  console.log(`Demo mode: ${process.env.USE_MOCK_DATA === 'true' ? 'Enabled' : 'Disabled'}`);
 });
