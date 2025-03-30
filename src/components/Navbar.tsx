@@ -1,9 +1,9 @@
 
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { LogOut, Menu, X, ChevronDown } from 'lucide-react';
+import { LogOut, Menu, X, ChevronDown, LayoutDashboard } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,10 +13,16 @@ import {
 
 const Navbar = () => {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
   };
 
   return (
@@ -55,15 +61,30 @@ const Navbar = () => {
               <div className="text-sm hidden md:block">
                 Welcome, <span className="font-medium">{user.name || user.email.split('@')[0]}</span>
               </div>
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                onClick={logout}
-                className="flex items-center gap-1"
-              >
-                <LogOut size={16} />
-                <span className="hidden sm:inline">Sign Out</span>
-              </Button>
+              
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="flex items-center gap-1"
+                  >
+                    My Account <ChevronDown size={16} />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem asChild>
+                    <Link to="/dashboard" className="flex items-center gap-2 w-full cursor-pointer">
+                      <LayoutDashboard size={16} />
+                      Dashboard
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleLogout} className="flex items-center gap-2 cursor-pointer">
+                    <LogOut size={16} />
+                    Sign Out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           ) : (
             <>
@@ -134,7 +155,26 @@ const Navbar = () => {
               >
                 About
               </Link>
-              {!user && (
+              {user ? (
+                <>
+                  <Link 
+                    to="/dashboard" 
+                    className="text-base font-medium hover:text-fashion-purple transition-colors px-2 py-1"
+                    onClick={toggleMobileMenu}
+                  >
+                    Dashboard
+                  </Link>
+                  <button 
+                    className="text-base font-medium hover:text-fashion-purple transition-colors px-2 py-1 text-left"
+                    onClick={() => {
+                      handleLogout();
+                      toggleMobileMenu();
+                    }}
+                  >
+                    Sign Out
+                  </button>
+                </>
+              ) : (
                 <>
                   <Link 
                     to="/login" 
