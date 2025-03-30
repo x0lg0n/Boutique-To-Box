@@ -6,7 +6,7 @@ import {
   LayoutDashboard, 
   Scissors,
   Image, 
-  Cube, 
+  Box, 
   TrendingUp, 
   Settings,
   User,
@@ -49,7 +49,7 @@ const DashboardSidebar = () => {
     {
       title: "3D Try On",
       path: "/dashboard/try-on",
-      icon: Cube,
+      icon: Box,
     },
     {
       title: "Tailor Connector",
