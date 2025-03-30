@@ -7,8 +7,8 @@
 [![Appwrite](https://img.shields.io/badge/Powered%20by-Appwrite-EC1C24)](https://appwrite.io)
 [![RunwayML](https://img.shields.io/badge/Integrated%20with-RunwayML-00C2FF)](https://runway.ml)
 
-## 🚀 Live Demo
-[Live Prototype](https://boutique-to-box-ace-hack-4-0.vercel.app/) 
+## 🚀 [Live Demo](https://boutique-to-box-ace-hack-4-0.vercel.app/)
+[Live Prototype](https://boutique-to-box-ace-hack-4-0.vercel.app/) | [Pitch Deck ](https://github.com/x0lg0n/Boutique-To-Box-AceHack-4.0/blob/main/Beige%20Fashion%20Minimalist%20Presentation.pdf)
 
 ## 🌟 Why FashionAI?
 **Industry 4.0 Breakthrough**:
