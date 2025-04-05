@@ -9,7 +9,111 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      designs: {
+        Row: {
+          body_type: string | null
+          created_at: string
+          description: string | null
+          design_url: string | null
+          garment_type: string | null
+          id: string
+          keywords: string[] | null
+          occasion: string | null
+          style_preference: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          body_type?: string | null
+          created_at?: string
+          description?: string | null
+          design_url?: string | null
+          garment_type?: string | null
+          id?: string
+          keywords?: string[] | null
+          occasion?: string | null
+          style_preference?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          body_type?: string | null
+          created_at?: string
+          description?: string | null
+          design_url?: string | null
+          garment_type?: string | null
+          id?: string
+          keywords?: string[] | null
+          occasion?: string | null
+          style_preference?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          email: string | null
+          id: string
+          name: string | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          id: string
+          name?: string | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      style_preferences: {
+        Row: {
+          body_type: string | null
+          created_at: string
+          favorite_colors: string[] | null
+          favorite_patterns: string[] | null
+          id: string
+          occasions: string[] | null
+          style_preference: string[] | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          body_type?: string | null
+          created_at?: string
+          favorite_colors?: string[] | null
+          favorite_patterns?: string[] | null
+          id?: string
+          occasions?: string[] | null
+          style_preference?: string[] | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          body_type?: string | null
+          created_at?: string
+          favorite_colors?: string[] | null
+          favorite_patterns?: string[] | null
+          id?: string
+          occasions?: string[] | null
+          style_preference?: string[] | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

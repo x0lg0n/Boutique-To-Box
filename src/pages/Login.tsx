@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,7 +12,7 @@ import { Mail, Lock } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { useAuth } from '@/contexts/AuthContext';
+import { useSupabase } from '@/contexts/SupabaseContext';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const loginSchema = z.object({
@@ -22,8 +22,9 @@ const loginSchema = z.object({
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { signIn, isLoading } = useSupabase();
   const isMobile = useIsMobile();
+  const [formLoading, setFormLoading] = useState(false);
   
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -35,18 +36,18 @@ const Login = () => {
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
-      await login(values.email, values.password);
-      toast({
-        title: "Login successful!",
-        description: "Welcome back to ThreadTailor.",
-      });
+      setFormLoading(true);
+      await signIn(values.email, values.password);
       navigate("/");
-    } catch (error) {
+    } catch (error: any) {
+      console.error("Login error:", error);
       toast({
         title: "Login failed",
-        description: "Please check your email and password.",
+        description: error?.message || "Please check your email and password.",
         variant: "destructive",
       });
+    } finally {
+      setFormLoading(false);
     }
   };
 
@@ -57,7 +58,7 @@ const Login = () => {
         <Card className="w-full max-w-md mx-4 md:mx-0">
           <CardHeader className="text-center pb-2 md:pb-6">
             <CardTitle className="text-xl md:text-2xl">Welcome Back</CardTitle>
-            <CardDescription>Sign in to your ThreadTailor account</CardDescription>
+            <CardDescription>Sign in to your Boutique to Box account</CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...form}>
@@ -115,8 +116,9 @@ const Login = () => {
                   type="submit" 
                   className="w-full bg-gradient-to-r from-fashion-purple to-fashion-darkPurple hover:opacity-90"
                   size={isMobile ? "default" : "lg"}
+                  disabled={formLoading || isLoading}
                 >
-                  Sign In
+                  {formLoading ? "Signing In..." : "Sign In"}
                 </Button>
               </form>
             </Form>

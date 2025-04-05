@@ -1,17 +1,48 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { useAuth } from '@/contexts/AuthContext';
+import { useSupabase } from '@/contexts/SupabaseContext';
+import { Link } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
 
 const DashboardOverview = () => {
-  const { user } = useAuth();
+  const { user } = useSupabase();
+  const [designCount, setDesignCount] = useState(0);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    async function fetchDesigns() {
+      if (!user) return;
+      
+      try {
+        setLoading(true);
+        const { count, error } = await supabase
+          .from('designs')
+          .select('*', { count: 'exact', head: true })
+          .eq('user_id', user.id);
+        
+        if (error) {
+          console.error('Error fetching designs:', error);
+          return;
+        }
+        
+        setDesignCount(count || 0);
+      } catch (error) {
+        console.error('Unexpected error fetching designs:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    
+    fetchDesigns();
+  }, [user]);
   
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
         <p className="text-muted-foreground">
-          Welcome back, {user?.name || user?.email.split('@')[0]}!
+          Welcome back, {user?.user_metadata?.name || user?.email?.split('@')[0] || 'Designer'}!
         </p>
       </div>
       
@@ -22,12 +53,16 @@ const DashboardOverview = () => {
             <CardDescription>Create custom clothing designs with AI</CardDescription>
           </CardHeader>
           <CardContent>
-            <p>You have created 0 designs this month</p>
+            <p>
+              {loading 
+                ? "Loading your designs..."
+                : `You have created ${designCount} design${designCount !== 1 ? 's' : ''}`}
+            </p>
           </CardContent>
           <CardFooter>
-            <a href="/dashboard/ai-designs" className="text-sm text-fashion-purple hover:underline">
+            <Link to="/design" className="text-sm text-fashion-purple hover:underline">
               Create a new design →
-            </a>
+            </Link>
           </CardFooter>
         </Card>
         
@@ -40,9 +75,9 @@ const DashboardOverview = () => {
             <p>Experience your designs in 3D before ordering</p>
           </CardContent>
           <CardFooter>
-            <a href="/dashboard/try-on" className="text-sm text-fashion-purple hover:underline">
+            <Link to="/dashboard/try-on" className="text-sm text-fashion-purple hover:underline">
               Try on a design →
-            </a>
+            </Link>
           </CardFooter>
         </Card>
         
@@ -55,9 +90,9 @@ const DashboardOverview = () => {
             <p>Explore the latest fashion trends and analytics</p>
           </CardContent>
           <CardFooter>
-            <a href="/dashboard/trends" className="text-sm text-fashion-purple hover:underline">
+            <Link to="/dashboard/trends" className="text-sm text-fashion-purple hover:underline">
               View trends →
-            </a>
+            </Link>
           </CardFooter>
         </Card>
       </div>

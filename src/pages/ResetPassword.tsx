@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -13,6 +13,7 @@ import { toast } from "@/hooks/use-toast";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { supabase } from "@/integrations/supabase/client";
 
 const resetSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),
@@ -20,6 +21,8 @@ const resetSchema = z.object({
 
 const ResetPassword = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   
   const form = useForm<z.infer<typeof resetSchema>>({
     resolver: zodResolver(resetSchema),
@@ -28,16 +31,39 @@ const ResetPassword = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof resetSchema>) => {
-    console.log("Reset password for:", values);
-    
-    // In a real app, this would call an API endpoint to send a reset link
-    toast({
-      title: "Reset email sent!",
-      description: "Check your inbox for password reset instructions.",
-    });
-    
-    setIsSubmitted(true);
+  const onSubmit = async (values: z.infer<typeof resetSchema>) => {
+    try {
+      setIsLoading(true);
+      
+      const { error } = await supabase.auth.resetPasswordForEmail(values.email, {
+        redirectTo: `${window.location.origin}/update-password`,
+      });
+      
+      if (error) {
+        toast({
+          title: "Error",
+          description: error.message,
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      toast({
+        title: "Reset email sent!",
+        description: "Check your inbox for password reset instructions.",
+      });
+      
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error("Reset password error:", error);
+      toast({
+        title: "Something went wrong",
+        description: "Unable to send reset email. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -84,8 +110,9 @@ const ResetPassword = () => {
                   <Button 
                     type="submit" 
                     className="w-full bg-gradient-to-r from-fashion-purple to-fashion-darkPurple hover:opacity-90"
+                    disabled={isLoading}
                   >
-                    Send Reset Link
+                    {isLoading ? "Sending Reset Link..." : "Send Reset Link"}
                   </Button>
                 </form>
               </Form>
