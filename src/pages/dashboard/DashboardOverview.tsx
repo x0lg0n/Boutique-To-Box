@@ -1,48 +1,17 @@
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { useSupabase } from '@/contexts/SupabaseContext';
-import { Link } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 
 const DashboardOverview = () => {
-  const { user } = useSupabase();
-  const [designCount, setDesignCount] = useState(0);
-  const [loading, setLoading] = useState(true);
-  
-  useEffect(() => {
-    async function fetchDesigns() {
-      if (!user) return;
-      
-      try {
-        setLoading(true);
-        const { count, error } = await supabase
-          .from('designs')
-          .select('*', { count: 'exact', head: true })
-          .eq('user_id', user.id);
-        
-        if (error) {
-          console.error('Error fetching designs:', error);
-          return;
-        }
-        
-        setDesignCount(count || 0);
-      } catch (error) {
-        console.error('Unexpected error fetching designs:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    
-    fetchDesigns();
-  }, [user]);
+  const { user } = useAuth();
   
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
         <p className="text-muted-foreground">
-          Welcome back, {user?.user_metadata?.name || user?.email?.split('@')[0] || 'Designer'}!
+          Welcome back, {user?.name || user?.email.split('@')[0]}!
         </p>
       </div>
       
@@ -53,16 +22,12 @@ const DashboardOverview = () => {
             <CardDescription>Create custom clothing designs with AI</CardDescription>
           </CardHeader>
           <CardContent>
-            <p>
-              {loading 
-                ? "Loading your designs..."
-                : `You have created ${designCount} design${designCount !== 1 ? 's' : ''}`}
-            </p>
+            <p>You have created 0 designs this month</p>
           </CardContent>
           <CardFooter>
-            <Link to="/design" className="text-sm text-fashion-purple hover:underline">
+            <a href="/dashboard/ai-designs" className="text-sm text-fashion-purple hover:underline">
               Create a new design →
-            </Link>
+            </a>
           </CardFooter>
         </Card>
         
@@ -75,9 +40,9 @@ const DashboardOverview = () => {
             <p>Experience your designs in 3D before ordering</p>
           </CardContent>
           <CardFooter>
-            <Link to="/dashboard/try-on" className="text-sm text-fashion-purple hover:underline">
+            <a href="/dashboard/try-on" className="text-sm text-fashion-purple hover:underline">
               Try on a design →
-            </Link>
+            </a>
           </CardFooter>
         </Card>
         
@@ -90,9 +55,9 @@ const DashboardOverview = () => {
             <p>Explore the latest fashion trends and analytics</p>
           </CardContent>
           <CardFooter>
-            <Link to="/dashboard/trends" className="text-sm text-fashion-purple hover:underline">
+            <a href="/dashboard/trends" className="text-sm text-fashion-purple hover:underline">
               View trends →
-            </Link>
+            </a>
           </CardFooter>
         </Card>
       </div>

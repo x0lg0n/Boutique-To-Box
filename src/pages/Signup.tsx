@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,7 +12,7 @@ import { Mail, Lock, User } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { useSupabase } from '@/contexts/SupabaseContext';
+import { useAuth } from '@/contexts/AuthContext';
 
 const signupSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -26,8 +26,7 @@ const signupSchema = z.object({
 
 const Signup = () => {
   const navigate = useNavigate();
-  const { signUp, isLoading } = useSupabase();
-  const [formLoading, setFormLoading] = useState(false);
+  const { signup } = useAuth();
   
   const form = useForm<z.infer<typeof signupSchema>>({
     resolver: zodResolver(signupSchema),
@@ -41,22 +40,18 @@ const Signup = () => {
 
   const onSubmit = async (values: z.infer<typeof signupSchema>) => {
     try {
-      setFormLoading(true);
-      await signUp(values.email, values.password, values.name);
+      await signup(values.name, values.email, values.password);
       toast({
         title: "Account created!",
-        description: "Welcome to Boutique to Box.",
+        description: "Welcome to ThreadTailor.",
       });
       navigate("/");
-    } catch (error: any) {
-      console.error("Signup error:", error);
+    } catch (error) {
       toast({
         title: "Signup failed",
-        description: error?.message || "An error occurred while creating your account.",
+        description: "An error occurred while creating your account.",
         variant: "destructive",
       });
-    } finally {
-      setFormLoading(false);
     }
   };
 
@@ -67,7 +62,7 @@ const Signup = () => {
         <Card className="w-full max-w-md">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl">Create an Account</CardTitle>
-            <CardDescription>Join Boutique to Box to start designing your custom clothing</CardDescription>
+            <CardDescription>Join ThreadTailor to start designing your custom clothing</CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...form}>
@@ -105,7 +100,6 @@ const Signup = () => {
                             placeholder="email@example.com" 
                             className="pl-10" 
                             {...field} 
-                            type="email"
                           />
                         </div>
                       </FormControl>
@@ -158,9 +152,8 @@ const Signup = () => {
                 <Button 
                   type="submit" 
                   className="w-full bg-gradient-to-r from-fashion-purple to-fashion-darkPurple hover:opacity-90"
-                  disabled={formLoading || isLoading}
                 >
-                  {formLoading ? "Creating Account..." : "Create Account"}
+                  Create Account
                 </Button>
               </form>
             </Form>
