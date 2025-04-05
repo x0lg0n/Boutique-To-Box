@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
+import { useSupabase } from '@/contexts/SupabaseContext';
 import DashboardSidebar from '@/components/DashboardSidebar';
 import { PanelLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -9,7 +9,7 @@ import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 
 const DashboardLayout = () => {
-  const { user, isLoading } = useAuth();
+  const { user, isLoading } = useSupabase();
 
   // Show loading state while checking auth status
   if (isLoading) {

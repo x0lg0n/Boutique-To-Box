@@ -11,7 +11,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
-import { AuthProvider } from "./contexts/AuthContext";
+import { SupabaseProvider } from "./contexts/SupabaseContext";
 
 // Dashboard imports
 import DashboardLayout from "./layouts/DashboardLayout";
@@ -28,7 +28,7 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <AuthProvider>
+      <SupabaseProvider>
         <Toaster />
         <Sonner />
         <BrowserRouter>
@@ -55,7 +55,7 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
-      </AuthProvider>
+      </SupabaseProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

@@ -1,7 +1,8 @@
+
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
+import { useSupabase } from '@/contexts/SupabaseContext';
 import { LogOut, Menu, X, ChevronDown, LayoutDashboard } from 'lucide-react';
 import {
   DropdownMenu,
@@ -11,7 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const Navbar = () => {
-  const { user, logout } = useAuth();
+  const { user, signOut } = useSupabase();
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -19,10 +20,13 @@ const Navbar = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await signOut();
     navigate('/');
   };
+
+  // Get user display name
+  const displayName = user?.user_metadata?.name || user?.email?.split('@')[0] || '';
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b">
@@ -58,7 +62,7 @@ const Navbar = () => {
           {user ? (
             <div className="flex items-center gap-4">
               <div className="text-sm hidden md:block">
-                Welcome, <span className="font-medium">{user.name || user.email.split('@')[0]}</span>
+                Welcome, <span className="font-medium">{displayName}</span>
               </div>
               
               <DropdownMenu>
