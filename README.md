@@ -3,7 +3,7 @@
 
 ![Banner](https://github.com/x0lg0n/Boutique-To-Box-AceHack-4.0/blob/main/Banner.png)
 
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Appwrite](https://img.shields.io/badge/Powered%20by-Appwrite-EC1C24)](https://appwrite.io)
 [![RunwayML](https://img.shields.io/badge/Integrated%20with-RunwayML-00C2FF)](https://runway.ml)
 
