@@ -3,12 +3,22 @@
 
 ![Banner](https://github.com/x0lg0n/Boutique-To-Box-AceHack-4.0/blob/main/Banner.png)
 
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Appwrite](https://img.shields.io/badge/Powered%20by-Appwrite-EC1C24)](https://appwrite.io)
-[![RunwayML](https://img.shields.io/badge/Integrated%20with-RunwayML-00C2FF)](https://runway.ml)
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![Unlicense License][license-shield]][license-url]
+[![Appwrite][Appwrite-shield]][Appwrite-url]
+[![RunwayML][RunwayML-shield]][RunwayML-url]
 
-## 🚀 [Live Demo](https://boutique-to-box.vercel.app/)
-[Live Prototype](https://boutique-to-box.vercel.app/) | [Pitch Deck ](https://github.com/x0lg0n/Boutique-To-Box-AceHack-4.0/blob/main/Beige%20Fashion%20Minimalist%20Presentation.pdf)
+## 🚀 [Live Demo](https://boutique-to-box.vercel.app/) | [Pitch Deck ](https://github.com/x0lg0n/Boutique-To-Box-AceHack-4.0/blob/main/Beige%20Fashion%20Minimalist%20Presentation.pdf)
+
+## 👥 Contributors
+Thanks to these amazing people for contributing to **Boutique-To-Box**:
+
+<a href="https://github.com/x0lg0n/Boutique-To-Box/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=x0lg0n/Boutique-To-Box" />
+</a>
 
 ## 🌟 Why FashionAI?
 **Industry 4.0 Breakthrough**:
@@ -127,3 +137,19 @@ async function createProduct(designUrl, locations) {
 ## 🐝 License
 Open Source Core under [MIT License](LICENSE)  
 Enterprise Extensions © 2024 FashionAI, Inc.
+
+<!-- badge links -->
+[contributors-shield]: https://img.shields.io/github/contributors/x0lg0n/Boutique-To-Box.svg
+[contributors-url]: https://github.com/x0lg0n/Boutique-To-Box/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/x0lg0n/Boutique-To-Box.svg
+[forks-url]: https://github.com/x0lg0n/Boutique-To-Box/network/members
+[stars-shield]: https://img.shields.io/github/stars/x0lg0n/Boutique-To-Box.svg
+[stars-url]: https://github.com/x0lg0n/Boutique-To-Box/stargazers
+[issues-shield]: https://img.shields.io/github/issues/x0lg0n/Boutique-To-Box.svg
+[issues-url]: https://github.com/x0lg0n/Boutique-To-Box/issues
+[license-shield]: https://img.shields.io/github/license/x0lg0n/Boutique-To-Box.svg
+[license-url]: https://github.com/x0lg0n/Boutique-To-Box/blob/main/LICENSE
+[Appwrite-shield]: https://img.shields.io/badge/Powered%20by-Appwrite-EC1C24
+[Appwrite-url]: https://appwrite.io
+[RunwayML-shield]: https://img.shields.io/badge/Integrated%20with-RunwayML-00C2FF
+[RunwayML-url]: https://runway.ml
