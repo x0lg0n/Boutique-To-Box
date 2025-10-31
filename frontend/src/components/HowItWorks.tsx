@@ -16,7 +16,7 @@ const steps = [
     number: "3",
     title: "Virtual Try-On",
     description: "Preview your designs in 3D and AR to see how they look before ordering.",
-    image: "https://images.unsplash.com/photo-1633419798825-5f9649384efb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+    image: "https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
   },
   {
     number: "4",
